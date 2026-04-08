@@ -13,6 +13,14 @@ Your goal is to:
 
 Replace this paragraph with your own summary of what your version does.
 
+The biggest learning moment during this project was seeing how a simple scoring system can behave like a real recommendation engine. By comparing features such as genre, mood, and energy, the system was able to produce results that often matched my expectations. This helped me understand that many recommendation systems begin with simple logic before becoming more advanced.
+
+Using AI tools like Copilot helped me move faster when writing and organizing code, especially for generating function structures and explanations. However, I still needed to double-check the logic and test the results to make sure the recommendations behaved correctly. Sometimes the AI suggested code that worked technically but did not match the scoring logic I intended.
+
+One surprising part of the project was how small changes in feature weights could noticeably change the recommendations. Even though the algorithm was simple, the results still felt meaningful because the scoring captured patterns between user preferences and song attributes.
+
+If I continued developing this project, I would expand the dataset with many more songs and genres, include more features like lyrics or popularity, and experiment with machine learning approaches that learn user preferences automatically rather than using fixed weights.
+
 ---
 
 ## How The System Works
@@ -121,6 +129,38 @@ Return Top Recommendations
 
 Real-world recommendation systems used by platforms like Spotify or YouTube operate at a much larger scale and often combine **content-based filtering** with **collaborative filtering**, which learns from the listening behavior of millions of users. This simulation focuses on the core concept by using song attributes and a simple scoring algorithm to generate personalized recommendations.
 
+## CLI Output Example
+
+The recommender system can be run from the command line using:
+
+python -m src.main
+
+Below is an example of the recommendations generated for the default user profile (genre: pop, mood: happy, energy: 0.8).
+
+![CLI Output](Images\CLI_output.png)
+
+## Phase 4: Evaluation with Multiple Profiles
+
+I tested the recommender with multiple user profiles to see how well the scoring logic handled different musical preferences.
+
+### High-Energy Pop
+![High-Energy Pop Output](Images\High_Energy_Pop.png)
+
+### Chill Lofi
+![Chill Lofi Output](Images\Chill_Lofi.png)
+
+### Deep Intense Rock
+![Deep Intense Rock Output](Images\Deep_Intense_Rock.png)
+
+### Edge Case: Sad but High Energy
+![Edge Case Output](Images\Sad_but_High_Energy.png)
+
+## Accuracy and Surprises
+
+For the default profile (genre = pop, mood = happy, energy = 0.8), the results felt correct. The song "Sunrise City" ranked first because it matched the user's preferred genre and mood, and its energy level was very close to the target value.
+
+Other songs like "Gym Hero" also ranked high because they matched the pop genre and had similar energy levels. This shows that the recommender is correctly using the scoring rules to rank songs based on user preferences.
+
 ---
 
 ## Getting Started
@@ -166,6 +206,18 @@ Use this section to document the experiments you ran. For example:
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
 
+### Experiment 1: Changing Feature Weights
+
+I ran an experiment where I reduced the weight of the genre match and increased the importance of the energy similarity score. After this change, songs with energy levels closer to the user’s target moved higher in the rankings, even when the genre did not match exactly. This showed that the recommender becomes more flexible when numerical features like energy are emphasized.
+
+### Experiment 2: Testing Different User Profiles
+
+I tested several different user profiles including High-Energy Pop, Chill Lofi, Deep Intense Rock, and an edge case profile called Sad but High Energy. Each profile produced noticeably different recommendation lists. For example, the Chill Lofi profile ranked relaxing low-energy songs such as "Library Rain" and "Midnight Coding" at the top, while the High-Energy Pop profile favored songs like "Sunrise City" and "Gym Hero".
+
+### Experiment 3: Edge Case Testing
+
+I also tested a less common profile that requested sad songs with high energy. The system still returned a blues song that matched both the genre and mood, but it also recommended other high-energy songs from different genres. This experiment showed that when exact matches are limited, the system relies more heavily on energy similarity to produce recommendations.
+
 ---
 
 ## Limitations and Risks
@@ -180,6 +232,10 @@ Examples:
 
 You will go deeper on this in your model card.
 
+This recommender system has several limitations because it uses a very small catalog of songs. With only a limited number of tracks and genres available, the recommendations may repeat similar songs or fail to represent many types of music. The model also relies only on a few features such as genre, mood, energy, and acousticness. It does not understand lyrics, language, artist popularity, or the context in which someone listens to music.
+
+Another limitation is that the scoring system uses fixed weights. This means the algorithm may over-favor certain features, such as genre or energy, depending on how the weights are set. As a result, some users may receive less diverse recommendations. Because of these limitations, this system is best viewed as a simple demonstration of how recommendation algorithms work rather than a full real-world music recommendation engine.
+
 ---
 
 ## Reflection
@@ -193,6 +249,9 @@ Write 1 to 2 paragraphs here about what you learned:
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
 
+This project helped me understand how recommendation systems turn user data and item features into predictions. By comparing song attributes like genre, mood, and energy with a user’s preferences, the system calculates a score for each song and ranks the best matches. Even though the algorithm was simple, the results often felt meaningful because the scoring captured patterns between user preferences and song characteristics.
+
+I also learned that bias or unfairness can appear in recommendation systems depending on the data and scoring rules. For example, if the dataset contains more songs from certain genres, the system may recommend those genres more often. Similarly, if one feature like energy is weighted too heavily, it can dominate the ranking and reduce diversity in recommendations. This showed me that real-world recommendation systems must carefully balance features and datasets to avoid creating filter bubbles or unfair recommendations.
 
 ---
 
